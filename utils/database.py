@@ -3,28 +3,31 @@ books = []
 def add_book(name, author):
     books.append({
         'name': name,
-        'author': author
+        'author': author,
+        'read': False
     })
     
     print('Book add!! ')
 
 
 def list_book():
-    for book in books:
-        print(f'Name: {book["name"]}')
-        print(f'Author: {book["author"]}') 
+    return books
     
     
 def read_book(name):
     for book in books:
         if name == book['name']:
-            print(f'Name: {book["name"]}')
-            print(f'Author: {book["author"]}')
+            book['read'] = True
                 
 
 def delete_book(name):
-    for book in books:
-        if name == book['name']:
-            books.remove(book)
+    global books
+    
+    books = [
+        book
+        for book in books
+        if book['name'] != name
+    ]
     
     print('Book deleted!')
+    

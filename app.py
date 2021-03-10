@@ -8,8 +8,7 @@ Enter:
 - 'd' to delete a book
 - 'q' to quit
 
-Your choice:
-"""
+Your choice: """
 
 
 def add_book():
@@ -20,7 +19,10 @@ def add_book():
     
 
 def list_book():
-    database.list_book()
+    books = database.list_book()
+    
+    for book in books:
+        print(book)
 
 
 def read_book():
@@ -44,13 +46,13 @@ PROMPT_FUNCTIONS = {
 
 
 def menu():
-    user_input = input(USER_CHOICE).lower()[0]
-    
-    while user_input != 'q':
-        PROMPT_FUNCTIONS[user_input]()
+    try:
         user_input = input(USER_CHOICE).lower()[0]
-
+    
+        while user_input != 'q':
+            PROMPT_FUNCTIONS[user_input]()
+            user_input = input(USER_CHOICE).lower()[0]
+    except:
+        print('Unknown comand. Please try again')
 
 menu()
-    
-    
