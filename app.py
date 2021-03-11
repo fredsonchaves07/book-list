@@ -22,7 +22,8 @@ def list_book():
     books = database.list_book()
     
     for book in books:
-        print(book)
+        read = 'YES' if book['read'] == '1' else 'NO'
+        print(f'{book["name"]} by {book["author"]}, read: {read}')
 
 
 def read_book():
@@ -46,6 +47,7 @@ PROMPT_FUNCTIONS = {
 
 
 def menu():
+    database.create_book_table()
     try:
         user_input = input(USER_CHOICE).lower()[0]
     
