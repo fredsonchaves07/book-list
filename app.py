@@ -1,5 +1,6 @@
 from utils import database
 
+
 USER_CHOICE = """
 Enter:
 - 'a' to add new book

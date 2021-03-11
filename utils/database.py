@@ -1,24 +1,42 @@
+import sqlite3
+
+
 books_file = 'books.txt'
 
 
 def create_book_table():
-    with open(books_file, 'w'):
-        pass
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
+    
+    cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, read integer)')
+    
+    connection.commit()
+    connection.close()
     
     
 def add_book(name, author):
-    with open(books_file, 'a') as file:
-         file.write(f'{name},{author},0')
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
+    
+    cursor.execute(f'INSERT INTO books VALUES(?, ?, 0)', (name, author))
+    
+    connection.commit()
+    connection.close()
 
 
 def list_book():
-    with open(books_file, 'r') as file:
-        lines = [line.strip().split(',') for line in file.readlines()]
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
     
-    return  [
-        {'name': line[0], 'author': line[1], 'read': line[2]}
-        for line in lines
+    cursor.execute(f'SELECT * FROM books')
+    books = [
+        {'name': row[0], 'author': row[1], 'read': row[2]}
+        for row in cursor.fetchall()
     ]
+    
+    connection.close()
+    
+    return books
     
     
 def read_book(name):
